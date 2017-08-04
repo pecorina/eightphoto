@@ -3,6 +3,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var sass = require('gulp-sass');
 var minifyCSS = require('gulp-minify-css');
+var watch = require('gulp-watch');
 var webserver = require('gulp-webserver');
 
 //concatena nuestros archivos js convirtiendolos en script.js el q guardara en una carpeta dist.- el q sera linkeado al html
@@ -21,6 +22,12 @@ gulp.task('style',function(){
     .pipe(concat('style.min.css'))
     .pipe(gulp.dest('dist/css/'));
 });
+//tarea gulp
+gulp.task('watch', function(){
+    gulp.watch('assets/sass/*.scss',['style']);
+    gulp.watch('assets/js/*.js', ['script']);
+});
+
 //webserver nos crea un servidor web de desarrollo q se ejecuta en localhost puerto 8000 
 gulp.task('webserver',function(){
     gulp.src('../eightphoto/')//se posisiona en la carpeta del proyecto
@@ -33,4 +40,4 @@ gulp.task('webserver',function(){
     }));
 });
 //le indicaremos a gulp cuales son las tareas q deberan ejecutar al hacer correr el comando GULP en la terminal//
-gulp.task('default', ['script','style', 'webserver']);
+gulp.task('default', ['script','style', 'webserver','watch']);
